@@ -1,4 +1,4 @@
-# NVIDIA Jetson 下通过 Jetson_gscam2 发布 RTSP 摄像头流
+# NVIDIA Jetson 下通过 gscam2 发布 RTSP 摄像头流
 
 ## 致谢
 
