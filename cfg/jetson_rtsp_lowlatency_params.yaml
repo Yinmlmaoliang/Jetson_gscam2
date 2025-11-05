@@ -1,0 +1,23 @@
+# NVIDIA Jetson RTSP camera configuration - Low latency variant
+# Optimized for minimal latency at the cost of some stability
+
+gscam_publisher:
+  ros__parameters:
+    # GStreamer pipeline with reduced latency settings
+    gscam_config: 'rtspsrc location=rtsp://192.168.137.208:8554/camera1 latency=100 protocols=tcp ! rtpjitterbuffer latency=50 ! rtph264depay ! h264parse config-interval=-1 ! nvv4l2decoder enable-max-performance=1 ! nvvidconv ! video/x-raw,format=BGRx ! videoconvert'
+
+    # Preroll for RTSP stability
+    preroll: True
+
+    # Use GStreamer timestamps
+    use_gst_timestamps: True
+
+    # Image encoding
+    image_encoding: 'rgb8'
+
+    # Camera info
+    camera_name: 'jetson_rtsp_camera'
+    frame_id: 'camera_frame'
+
+    # Disable sync for lower latency
+    sync_sink: False

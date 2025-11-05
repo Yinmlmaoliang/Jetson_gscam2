@@ -1,0 +1,23 @@
+# NVIDIA Jetson RTSP camera configuration with hardware acceleration
+# Uses nvv4l2decoder and nvvidconv for hardware-accelerated H.264 decoding
+
+gscam_publisher:
+  ros__parameters:
+    # GStreamer pipeline with NVIDIA Jetson hardware acceleration
+    gscam_config: 'rtspsrc location=rtsp://192.168.137.208:8554/camera1 latency=2000 protocols=tcp ! rtpjitterbuffer latency=500 ! rtph264depay ! h264parse config-interval=-1 ! nvv4l2decoder enable-max-performance=1 skip-frames=1 ! nvvidconv ! video/x-raw,format=BGRx ! videoconvert'
+
+    # Preroll helps with RTSP streams that need buffering
+    preroll: True
+
+    # Use GStreamer timestamps for RTSP streams
+    use_gst_timestamps: True
+
+    # Image encoding (BGRx will be converted to RGB8 by default)
+    image_encoding: 'rgb8'
+
+    # Camera info
+    camera_name: 'jetson_rtsp_camera'
+    frame_id: 'camera_frame'
+
+    # Sync to clock (set to false for lower latency)
+    sync_sink: True
