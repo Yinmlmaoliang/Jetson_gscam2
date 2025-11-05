@@ -6,8 +6,18 @@
 
 ## 安装与编译指南
 
-适用版本：**ROS2 Foxy, Galactic, Humble, Rolling**  
+适用版本：**ROS2 Foxy, Galactic, Humble, Rolling**
 详细安装流程见 [Dockerfile](Dockerfile)。
+
+### 步骤 0：克隆本仓库
+
+```bash
+# 进入 ROS2 工作空间的 src 目录
+cd ~/ros2_ws/src  # 或者你的工作空间路径，如 cd ~/tarts_ws/src
+
+# 克隆本仓库
+git clone https://github.com/Yinmlmaoliang/Jetson_gscam2.git gscam2
+```
 
 ### 步骤 1：安装 GStreamer 依赖
 
@@ -33,16 +43,22 @@ sudo apt-get install -y \
 ### 步骤 2：克隆并编译 `ros2_shared` 依赖
 
 ```bash
-cd /home/nvidia/ros/tarts_ws/src
+# 克隆 ros2_shared 依赖到工作空间 src 目录
+cd ~/ros2_ws/src  # 确保在工作空间的 src 目录
 git clone https://github.com/ptrmu/ros2_shared.git -b master
-cd ..
+
+# 返回工作空间根目录并编译
+cd ~/ros2_ws  # 或 cd ~/tarts_ws
 colcon build --packages-select ros2_shared
 ```
 
 ### 步骤 3：安装工作空间依赖项
 
 ```bash
-cd /home/nvidia/ros/tarts_ws   # 如不在工作空间根目录, 先cd回来
+# 返回工作空间根目录（如果不在的话）
+cd ~/ros2_ws  # 或 cd ~/tarts_ws
+
+# 安装依赖
 rosdep install -y --from-paths . --ignore-src
 ```
 
@@ -66,7 +82,7 @@ colcon build --packages-select gscam2 --symlink-install
 
 ```bash
 # 确保已经 source 工作空间
-source /home/nvidia/ros/tarts_ws/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 
 # 使用默认 RTSP URL 启动
 ros2 launch gscam2 jetson_rtsp_launch.py
@@ -93,7 +109,7 @@ ros2 launch gscam2 jetson_rtsp_launch.py camera_name:=my_camera frame_id:=my_cam
 
 ```bash
 # 确保已经 source 工作空间
-source /home/nvidia/ros/tarts_ws/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 
 # 启动三路摄像头
 ros2 launch gscam2 triple_jetson_rtsp_launch.py
