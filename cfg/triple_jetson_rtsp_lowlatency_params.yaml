@@ -1,0 +1,66 @@
+# Triple NVIDIA Jetson RTSP camera configuration with hardware acceleration
+# Low latency mode: ~150ms latency
+
+gscam_camera1:
+  ros__parameters:
+    # GStreamer pipeline with reduced latency settings
+    gscam_config: 'rtspsrc location=rtsp://192.168.137.208:8554/camera1 latency=100 protocols=tcp ! rtpjitterbuffer latency=50 ! rtph264depay ! h264parse config-interval=-1 ! nvv4l2decoder enable-max-performance=1 ! nvvidconv ! video/x-raw,format=BGRx ! videoconvert'
+    
+    # Preroll for RTSP stability
+    preroll: True
+    
+    # Use GStreamer timestamps
+    use_gst_timestamps: True
+    
+    # Image encoding
+    image_encoding: 'rgb8'
+    
+    # Camera info
+    camera_name: 'camera1'
+    frame_id: 'camera1_frame'
+    
+    # Disable sync for lower latency
+    sync_sink: False
+
+gscam_camera2:
+  ros__parameters:
+    # GStreamer pipeline with reduced latency settings
+    gscam_config: 'rtspsrc location=rtsp://192.168.137.208:8554/camera2 latency=100 protocols=tcp ! rtpjitterbuffer latency=50 ! rtph264depay ! h264parse config-interval=-1 ! nvv4l2decoder enable-max-performance=1 ! nvvidconv ! video/x-raw,format=BGRx ! videoconvert'
+    
+    # Preroll for RTSP stability
+    preroll: True
+    
+    # Use GStreamer timestamps
+    use_gst_timestamps: True
+    
+    # Image encoding
+    image_encoding: 'rgb8'
+    
+    # Camera info
+    camera_name: 'camera2'
+    frame_id: 'camera2_frame'
+    
+    # Disable sync for lower latency
+    sync_sink: False
+
+gscam_camera3:
+  ros__parameters:
+    # GStreamer pipeline with reduced latency settings
+    gscam_config: 'rtspsrc location=rtsp://192.168.137.208:8554/camera3 latency=100 protocols=tcp ! rtpjitterbuffer latency=50 ! rtph264depay ! h264parse config-interval=-1 ! nvv4l2decoder enable-max-performance=1 ! nvvidconv ! video/x-raw,format=BGRx ! videoconvert'
+    
+    # Preroll for RTSP stability
+    preroll: True
+    
+    # Use GStreamer timestamps
+    use_gst_timestamps: True
+    
+    # Image encoding
+    image_encoding: 'rgb8'
+    
+    # Camera info
+    camera_name: 'camera3'
+    frame_id: 'camera3_frame'
+    
+    # Disable sync for lower latency
+    sync_sink: False
+

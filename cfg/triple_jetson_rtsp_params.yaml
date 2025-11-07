@@ -1,0 +1,66 @@
+# Triple NVIDIA Jetson RTSP camera configuration with hardware acceleration
+# Standard latency mode: ~2.5s latency, more stable
+
+gscam_camera1:
+  ros__parameters:
+    # GStreamer pipeline with NVIDIA Jetson hardware acceleration
+    gscam_config: 'rtspsrc location=rtsp://192.168.137.208:8554/camera1 latency=2000 protocols=tcp ! rtpjitterbuffer latency=500 ! rtph264depay ! h264parse config-interval=-1 ! nvv4l2decoder enable-max-performance=1 skip-frames=1 ! nvvidconv ! video/x-raw,format=BGRx ! videoconvert'
+    
+    # Preroll helps with RTSP streams that need buffering
+    preroll: True
+    
+    # Use GStreamer timestamps for RTSP streams
+    use_gst_timestamps: True
+    
+    # Image encoding (BGRx will be converted to RGB8 by default)
+    image_encoding: 'rgb8'
+    
+    # Camera info
+    camera_name: 'camera1'
+    frame_id: 'camera1_frame'
+    
+    # Sync to clock (set to false for lower latency)
+    sync_sink: True
+
+gscam_camera2:
+  ros__parameters:
+    # GStreamer pipeline with NVIDIA Jetson hardware acceleration
+    gscam_config: 'rtspsrc location=rtsp://192.168.137.208:8554/camera2 latency=2000 protocols=tcp ! rtpjitterbuffer latency=500 ! rtph264depay ! h264parse config-interval=-1 ! nvv4l2decoder enable-max-performance=1 skip-frames=1 ! nvvidconv ! video/x-raw,format=BGRx ! videoconvert'
+    
+    # Preroll helps with RTSP streams that need buffering
+    preroll: True
+    
+    # Use GStreamer timestamps for RTSP streams
+    use_gst_timestamps: True
+    
+    # Image encoding (BGRx will be converted to RGB8 by default)
+    image_encoding: 'rgb8'
+    
+    # Camera info
+    camera_name: 'camera2'
+    frame_id: 'camera2_frame'
+    
+    # Sync to clock (set to false for lower latency)
+    sync_sink: True
+
+gscam_camera3:
+  ros__parameters:
+    # GStreamer pipeline with NVIDIA Jetson hardware acceleration
+    gscam_config: 'rtspsrc location=rtsp://192.168.137.208:8554/camera3 latency=2000 protocols=tcp ! rtpjitterbuffer latency=500 ! rtph264depay ! h264parse config-interval=-1 ! nvv4l2decoder enable-max-performance=1 skip-frames=1 ! nvvidconv ! video/x-raw,format=BGRx ! videoconvert'
+    
+    # Preroll helps with RTSP streams that need buffering
+    preroll: True
+    
+    # Use GStreamer timestamps for RTSP streams
+    use_gst_timestamps: True
+    
+    # Image encoding (BGRx will be converted to RGB8 by default)
+    image_encoding: 'rgb8'
+    
+    # Camera info
+    camera_name: 'camera3'
+    frame_id: 'camera3_frame'
+    
+    # Sync to clock (set to false for lower latency)
+    sync_sink: True
+
