@@ -352,6 +352,9 @@ void GSCamNode::impl::process_frame()
   }
   // RCLCPP_INFO(get_logger(), "Image time stamp: %.3f",cinfo->header.stamp.toSec());
   cinfo->header.frame_id = cxt_.frame_id_;
+  // Override width and height with actual GStreamer output dimensions
+  cinfo->width = width_;
+  cinfo->height = height_;
   if (cxt_.image_encoding_ == "jpeg") {
     auto img = std::make_unique<sensor_msgs::msg::CompressedImage>();
     img->header = cinfo->header;
